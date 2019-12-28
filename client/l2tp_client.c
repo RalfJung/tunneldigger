@@ -1459,6 +1459,7 @@ int main(int argc, char **argv)
     time_t timer_collect = timer_now();
     int ready_cnt = 0;
     for (;;) {
+      syslog(LOG_INFO, "Polling in selection loop.");
       ready_cnt = 0;
       broker_select(brokers, broker_cnt); // poll from all FDs
       for (i = 0; i < broker_cnt; i++) {
@@ -1506,6 +1507,7 @@ int main(int argc, char **argv)
     // not recover after 15 seconds, restart the broker selection process.
     time_t timer_establish = timer_now();
     for (;;) {
+      syslog(LOG_INFO, "Polling in main loop.");
       broker_select(&brokers[i], 1); // poll from this FD
       context_process(main_context);
 
